@@ -5,7 +5,8 @@
 #     * sed s/\ //g < ad.data > ad.data.new
 #     * mv ad.data.new ad.data
 
-library(class);
+library(class)
+library(rpart)
 
 ## Reading data
 # The na.strings replace the non available symbol of the dataset by the R one (NA)
@@ -55,12 +56,13 @@ while(kk < 100){
   iads_nomiss.knn <- knn(train = iads_nomiss.train[1:1558], test = iads_nomiss.set[1:1558], 
                          cl = iads_nomiss.train$V1559, k = kk, prob = TRUE)
   
-  iads_nomiss.err <- rbind(iads_nomiss.err, c(kk, abs(summary(iads_nomiss.knn)[1] - iads_nomiss.sum[1])))
+  err <- abs(summary(iads_nomiss.knn)[1] - iads_nomiss.sum[1])
+  iads_nomiss.err <- rbind(iads_nomiss.err, c(kk, err, (((iads_nomiss.sum[1]-err)+(iads_nomiss.sum[2]-err))/iads_nomiss.n_inst)))
   
   #kk <- kk * 2 + 1
   kk <- kk + 4
 }
-colnames(iads_nomiss.err) <- c("k", "err")
+colnames(iads_nomiss.err) <- c("k", "err", "accuracy")
 
 # To plot the distribution
 # Try to plot a distribution curve
@@ -83,11 +85,13 @@ while(kk < 100){
   iads_zero.knn <- knn(train = iads_nomiss.train[1:1558], test = iads_zero.set[1:1558], 
                          cl = iads_nomiss.train$V1559, k = kk, prob = TRUE)
   
-  iads_zero.err <- rbind(iads_zero.err, c(kk, abs(summary(iads_zero.knn)[1] - iads.sum[1])))
+  #iads_zero.err <- rbind(iads_zero.err, c(kk, abs(summary(iads_zero.knn)[1] - iads.sum[1])))
+  err <- abs(summary(iads_zero.knn)[1] - iads.sum[1])
+  iads_zero.err <- rbind(iads_zero.err, c(kk, err, (((iads.sum[1]-err)+(iads.sum[2]-err))/iads.n_inst)))
   
   kk <- kk + 4
 }
-colnames(iads_zero.err) <- c("k", "err")
+colnames(iads_zero.err) <- c("k", "err", "accuracy")
 
 
 ### Learn with the mean (or the dominant feature for the boolean) instead of missing values 
@@ -114,8 +118,31 @@ while(kk < 100){
   iads_filled.knn <- knn(train = iads_nomiss.train[1:1558], test = iads_filled.set[1:1558], 
                          cl = iads_nomiss.train$V1559, k = kk, prob = TRUE)
   
-  iads_filled.err <- rbind(iads_filled.err, c(kk, abs(summary(iads_filled.knn)[1] - iads.sum[1])))
+  #iads_filled.err <- rbind(iads_filled.err, c(kk, abs(summary(iads_filled.knn)[1] - iads.sum[1])))
+  err <- abs(summary(iads_filled.knn)[1] - iads.sum[1])
+  iads_filled.err <- rbind(iads_filled.err, c(kk, err, (((iads.sum[1]-err)+(iads.sum[2]-err))/iads.n_inst)))  
   
   kk <- kk + 4
 }
 colnames(iads_filled.err) <- c("k", "err")
+
+
+
+#########################################################################################
+### Decision tree part
+### http://www.statmethods.net/advstats/cart.html
+
+## Create a formula for a model with a large number of variables:
+iads.vars <- names(iads.set[1:1558])
+iads.formula <- as.formula(paste("V1559 ~ ", paste(iads.vars, collapse= "+")))
+
+
+# Test
+tmp <- rpart(formula = iads.formula, data = iads.set, method = "class", 
+             control = rpart.control(minsplit = 5, cp = 0.01,  xval = iads_nomiss.n_inst * 10 / 100)) #, maxdepth = 10))
+plot(tmp, uniform=TRUE)
+text(tmp, use.n = TRUE)
+tmp
+summary(tmp)
+plotcp(tmp)
+printcp(tmp)
