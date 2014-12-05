@@ -2,7 +2,7 @@ install.packages('randomForest')
 library('randomForest')
 
 # read csv file
-krk <- read.csv('krk.csv', header = TRUE, sep = ',')
+krk <- read.csv('krk/krk.csv', header = TRUE, sep = ',')
 
 # cleanup data
 krk$moves.to.win <- as.numeric(ordered(krk$moves.to.win,
