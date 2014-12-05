@@ -1,0 +1,133 @@
+### Introduction to k-NN in R ### (cf. https://en.wikibooks.org/wiki/Data_Mining_Algorithms_In_R/Classification/kNN)
+
+We have chosen the k-NN implementation of the R-package (R library) "class". 
+This gives us three functions: knn1 which is the k-NN with k=1, knn.cv the 
+original k-NN with cross validation and knn the original. In these ones, 
+there isn't any specific processing for the non available (NA in R) values, so 
+we had to treat them by hand (as explained later). We also found, but too 
+late, two other R-packages called "kknn" and  "RWeka" which do the same job but 
+provide more details (in the attributes attached to the result or in the summary) 
+like the number of errors and some other metrics. They also have options to work 
+with NA values and to give a formula (a rule) to learn without playing with 
+binding columns in another data frame or any other preliminary treatment. 
+
+
+### The "Internet Advertisements" dataset ###
+
+## Set presentation ##
+----------------------
+This set represents possible advertisements on Web pages and aims to learn model 
+that can predict whether an image is an advertisement. This is a classification 
+set with two classes "ad." and "nonad.", within  the classes distribution is quiet 
+unbalanced: among 3279 instances, we have "2871 nonad." and "458 ad.". Among the 
+attributes, we have three of them that are continuous values concerning the 
+geometry of the images. All others are binaries concerning the URL construction 
+and keywords. One of the reasons for our interest in this dataset is the large number 
+of attributes (1558). It is important to note that for most of the cases the binary 
+attributes are set to zero, it has the effect of increasing the importance of the 
+continuous values. The second reason of our choice is the presence of missing values, 
+indeed, we wanted to see the impact of such values on the learned model and the 
+subsequent predictions. The quantity of missing values is about 28% and are located 
+on the three continuous attributes and another term. 
+
+
+## Learning with the k-NN method on the "Internet Advertisements" dataset ##
+-----------------------------------------------------------------------------
+
+** Data preparation **
+----------------------
+As we said before, the chosen dataset contains a significant number of missing values. 
+Thus before the application of k-NN, we have to consider them and to make them usable. 
+To do that, we have applied the methods: 
+	* Remove instances containing missing value(s),
+	* Replace missing values with 0,
+	* or Replace the missing values with values that have smaller impact. 
+
+Regarding the third case, we have chosen to replace the continuous missing values with 
+the mean of their respective attributes. The thought of this choice remain in reducing the 
+risk to have far values to each others (particularly with this percentage of missing values) 
+because it can result with a "broken" model. Of course, it is also possible that this action 
+favors the overfitting.
+Furthermore, since we have three attributes that are continuous values with a quiet big 
+range (we don't know what is "big" in real life), we used basic scaling to reduce it: 
+
+x' = (x - min(x)) / (max(x) - min(x))
+
+By reading the following results, we can conclude on the presence of many low values 
+(close to median) and less bigger values. So we can expect that we will  only get a small 
+difference for the prediction. 
+
+	1. Min.    1st Qu.  Median  Mean    3rd Qu.  Max. 
+	   1.00    25.00    51.00   63.91   84.00    640.00 
+	
+	2. Min.    1st Qu.  Median  Mean    3rd Qu.  Max. 
+	   1.0     80.5     110.0   155.6   184.0    640.0 
+
+	3. Min.    1st Qu.  Median  Mean    3rd Qu.  Max. 
+	   0.0015  1.0330   2.1110  3.9130  5.3330   60.0000 
+
+
+** Experimental results **
+--------------------------
+
+First of all, because of the missing values, instead of using the k-NN version providing 
+cross-validation, we had to create ourself a training set. To do that, we just pick randomly 
+20% of the rows without any missing value (this percentage is arbitrary but we found it 
+reasonable regarding the number of instances). 
+All our experiments are based on the observation of the accuracy by modulating the value of k. 
+As it, we can of we can see the influence of k on the accuracy of predictions. We take 25 
+value of k between 0 and 100.
+
+
+* First experiment [ads-1st-experiment.svg] *
+--------------------
+This experiment use no scaling and all the data as test set (predictions are also done with 
+data used to learn the model). On this experiment, we can see that the best values of k are 
+respectively: 1, 1 and 20. Moreover, the accuracy is around 90% after a k which is apparently 
+too big. This result might be related to the overfitting effect mentioned before. We can also see 
+that the data substitution strategy doesn't impact a lot the prediction. In the next 
+experiment we will remove the data used to learn of the test set. 
+
+
+* Second experiment [ads-2nd-experiment.svg] *
+---------------------
+The goal is to reduce the overfitting by clearly defining a set to training and a set 
+for testing. That means we don't have the training data in the testing set. We can see 
+that the fact to impute the training data reduces the overfitting, especially for the sets 
+including the processed non available values. This improvement doesn't change anything in the result 
+concerning the NA values substitution.
+
+
+* Third experiment [ads-3rd-experiment*.svg] *
+--------------------
+This experiment is exactly the same as the second one but we have applied scaling (as given before).
+The result is not really satisfying even for k=1, the best result for the sets containing the rows 
+with NA values. What is also a bit strange, the effect of scaling have contradictory behaviors on sets 
+containing non available values and the set without.
+
+
+
+
+## Learning with the k-NN method on the "Chess (King-Rook vs. King) Data Set" dataset ##
+----------------------------------------------------------------------------------------
+
+** Data preparation **
+----------------------
+Compared to the "Internet Advertisements" dataset, this set is a bit easier to manipulate.
+Indeed, first, each attribute has a value in a finite set of values (we are in a dataset 
+concerning chess, so the possible values are numbers of rows or letters of colors). 
+However the column position is denoted by the corresponding letter, and, because of it, 
+the few work we did is to translate these letters to numeric values. 
+
+
+** Experimental results  **
+--------------------------
+From the dataset nature, we used first the k-NN version including cross-validation. To that, we confront 
+results from homemade training set and, as before, test set with and without training values. We can 
+immediately see that we cannot compete against the cross-validation implementation. First regarding the 
+results with our homemade training set, we can say that leaving the data used in the training set in the 
+test set help the overfitting. This claim is quiet sure because the only difference between the two 
+experiments (red and green) is the presence or not of the data used to learn a model. Now, concerning the 
+knn.cv (knn with cross validation), our assumption, but not confirmed, is that we use less data to learn 
+(~30% in our last and presented experiments) than the "class" library.
+

@@ -1,5 +1,6 @@
 ## Owner: Antoine Rougier, 3 Dec. 2014
 library(class)
+library(ggplot2)
 
 krk.set <- read.csv('krk.csv', header = TRUE, sep = ',')
 
@@ -108,9 +109,23 @@ while(kk < 100){
 colnames(tmp.err) <- c("k", "accuracy")
 
 # Plot accuracy
-krk.plot <- ggplot(cbind(tmp.err, krk.man.err$accuracy, krk.err$accuracy), aes(tmp.err$k)) +
-  geom_line(aes(y=tmp.err$accuracy), color = "red") +
-  geom_line(aes(y=krk.man.err$accuracy), color = "blue") +
-  geom_line(aes(y=krk.err$accuracy), color = "green") +
+krk.plot <- ggplot(cbind(tmp.err, krk.man.err$accuracy, krk.err$accuracy), aes(x = tmp.err$k)) +
+  geom_line(aes(y=tmp.err$accuracy, color = "Test set without training values")) +
+  geom_line(aes(y=krk.man.err$accuracy, color = "Test set with training values")) +
+  geom_line(aes(y=krk.err$accuracy, color = "knn + cross-validation")) +
+  scale_colour_manual("", 
+                      breaks = c("Test set without training values", "Test set with training values",
+                                 "knn + cross-validation"),
+                      values = c("red", "green", "blue")) +
   ylab("Accuracy") +
-  xlab("Distance k")
+  xlab("Distance k")+
+  ggtitle("k-NN - King-Rook vs. King") +
+  theme_bw() +
+  theme(
+    plot.title = element_text(family="Times", size = 10),
+    axis.text = element_text(size = 11),
+    axis.title = element_text(family="Times", size = 11),
+    legend.text = element_text(family="Times", size = 11),
+    legend.title = element_text(family="Times", size = 12))
+krk.plot    
+
