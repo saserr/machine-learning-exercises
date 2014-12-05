@@ -51,7 +51,7 @@ if (!file.exists("./krk.train.data")) {
   krk.train <- data.frame()
   kk <- 1
   while(kk < (krk.n_inst * 30 / 100)) {
-    krk.train <- rbind(krk.train, krk.set[as.integer(runif(n = 1, min = 1, max = krk.n_inst)),])
+    krk.train <- rbind(krk.train, krk.set[as.integer(runif(n = 1, min = 1, max = krk.n_inst)) ,])
     kk <- kk + 1
   }
   write.csv(x = krk.train, file = "krk.train.data", row.names = FALSE)
@@ -80,3 +80,37 @@ while(kk < 100){
 }
 colnames(krk.man.err) <- c("k", "accuracy")
 
+
+
+
+# maybe use this one: eliminates most of the rows used for training
+tmp<-krk.set[as.integer(row.names(krk.train))*-1,]
+kk <- 1
+tmp.err <- data.frame()
+tmp.sum = summary(tmp$moves.to.win)
+while(kk < 100){
+  tmp.knn <- knn(train = krk.train[1:6], test = tmp[1:6], cl = krk.train$moves.to.win, k = kk, prob = TRUE)
+  
+  errs <- abs(summary(tmp.knn) - tmp.sum)
+  # This compute the accuracy for each k
+  tmp.err <- rbind(tmp.err, c(kk, (((tmp.sum[1]-errs[1])+(tmp.sum[2]-errs[2])+
+                                            (tmp.sum[3]-errs[3])+(tmp.sum[4]-errs[4])+
+                                            (tmp.sum[5]-errs[5])+(tmp.sum[6]-errs[6])+
+                                            (tmp.sum[7]-errs[7])+(tmp.sum[8]-errs[8])+
+                                            (tmp.sum[9]-errs[9])+(tmp.sum[10]-errs[10])+
+                                            (tmp.sum[11]-errs[11])+(tmp.sum[12]-errs[12])+
+                                            (tmp.sum[13]-errs[13])+(tmp.sum[14]-errs[14])+
+                                            (tmp.sum[15]-errs[15])+(tmp.sum[16]-errs[16])+
+                                            (tmp.sum[17]-errs[17])+(tmp.sum[18]-errs[18]))/krk.n_inst)))
+  #kk <- kk * 2 + 1
+  kk <- kk + 4
+}
+colnames(tmp.err) <- c("k", "accuracy")
+
+# Plot accuracy
+krk.plot <- ggplot(cbind(tmp.err, krk.man.err$accuracy, krk.err$accuracy), aes(tmp.err$k)) +
+  geom_line(aes(y=tmp.err$accuracy), color = "red") +
+  geom_line(aes(y=krk.man.err$accuracy), color = "blue") +
+  geom_line(aes(y=krk.err$accuracy), color = "green") +
+  ylab("Accuracy") +
+  xlab("Distance k")
