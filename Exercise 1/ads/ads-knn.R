@@ -45,21 +45,21 @@ if (!file.exists("./ad.train.data")) {
 }
 
 # Scaling the training set
-iads_nomiss.train$V1 <- ((iads_nomiss.train$V1 - min(iads_nomiss.train$V1)) / (max(iads_nomiss.train$V1) + min(iads_nomiss.train$V1)))
-iads_nomiss.train$V2 <- ((iads_nomiss.train$V2 - min(iads_nomiss.train$V2)) / (max(iads_nomiss.train$V2) + min(iads_nomiss.train$V2)))
-iads_nomiss.train$V3 <- ((iads_nomiss.train$V3 - min(iads_nomiss.train$V3)) / (max(iads_nomiss.train$V3) + min(iads_nomiss.train$V3)))
+#iads_nomiss.train$V1 <- ((iads_nomiss.train$V1 - min(iads_nomiss.train$V1)) / (max(iads_nomiss.train$V1) + min(iads_nomiss.train$V1)))
+#iads_nomiss.train$V2 <- ((iads_nomiss.train$V2 - min(iads_nomiss.train$V2)) / (max(iads_nomiss.train$V2) + min(iads_nomiss.train$V2)))
+#iads_nomiss.train$V3 <- ((iads_nomiss.train$V3 - min(iads_nomiss.train$V3)) / (max(iads_nomiss.train$V3) + min(iads_nomiss.train$V3)))
 
 ## Here we run the k-NN with different values of k, then we store the error results to check out what is 
 ## the best k to choose in our case
 # Here we use the knn with implicit cross validation
 # iads_nomiss.knn <- knn.cv(train = iads_nomiss.set[1:1558], cl = iads_nomiss.set$V1559, k = 13, prob = TRUE)
 
-iads_nomiss.set <- iads_nomiss.set[as.integer(row.names(iads_nomiss.train))*-1,] # Used to eliminate training data
+#iads_nomiss.set <- iads_nomiss.set[as.integer(row.names(iads_nomiss.train))*-1,] # Used to eliminate training data
 
 # Scaling
-iads_nomiss.set$V1 <- ((iads_nomiss.set$V1 - min(iads_nomiss.set$V1)) / (max(iads_nomiss.set$V1) + min(iads_nomiss.set$V1)))
-iads_nomiss.set$V2 <- ((iads_nomiss.set$V2 - min(iads_nomiss.set$V2)) / (max(iads_nomiss.set$V2) + min(iads_nomiss.set$V2)))
-iads_nomiss.set$V3 <- ((iads_nomiss.set$V3 - min(iads_nomiss.set$V3)) / (max(iads_nomiss.set$V3) + min(iads_nomiss.set$V3)))
+#iads_nomiss.set$V1 <- ((iads_nomiss.set$V1 - min(iads_nomiss.set$V1)) / (max(iads_nomiss.set$V1) + min(iads_nomiss.set$V1)))
+#iads_nomiss.set$V2 <- ((iads_nomiss.set$V2 - min(iads_nomiss.set$V2)) / (max(iads_nomiss.set$V2) + min(iads_nomiss.set$V2)))
+#iads_nomiss.set$V3 <- ((iads_nomiss.set$V3 - min(iads_nomiss.set$V3)) / (max(iads_nomiss.set$V3) + min(iads_nomiss.set$V3)))
 
 iads_nomiss.sum <- summary(iads_nomiss.set[,1559])
 iads_nomiss.n_inst <- length(iads_nomiss.set$V1)
@@ -90,17 +90,17 @@ colnames(iads_nomiss.err) <- c("k", "err", "accuracy")
 
 ### Learn with 0 instead of missing values
 
-#iads_zero.set <- iads.set
-iads_zero.set <- iads.set[as.integer(row.names(iads_nomiss.train))*-1,] # Used to eliminate training data
+iads_zero.set <- iads.set
+#iads_zero.set <- iads.set[as.integer(row.names(iads_nomiss.train))*-1,] # Used to eliminate training data
 iads_zero.n_inst <- length(iads_zero.set$V1)
 
 # Replace all NA by 0
 iads_zero.set[is.na(iads_zero.set)] <- 0
 
 # Scaling
-iads_zero.set$V1 <- ((iads_zero.set$V1 - min(iads_zero.set$V1)) / (max(iads_zero.set$V1) + min(iads_zero.set$V1)))
-iads_zero.set$V2 <- ((iads_zero.set$V2 - min(iads_zero.set$V2)) / (max(iads_zero.set$V2) + min(iads_zero.set$V2)))
-iads_zero.set$V3 <- ((iads_zero.set$V3 - min(iads_zero.set$V3)) / (max(iads_zero.set$V3) + min(iads_zero.set$V3)))
+#iads_zero.set$V1 <- ((iads_zero.set$V1 - min(iads_zero.set$V1)) / (max(iads_zero.set$V1) + min(iads_zero.set$V1)))
+#iads_zero.set$V2 <- ((iads_zero.set$V2 - min(iads_zero.set$V2)) / (max(iads_zero.set$V2) + min(iads_zero.set$V2)))
+#iads_zero.set$V3 <- ((iads_zero.set$V3 - min(iads_zero.set$V3)) / (max(iads_zero.set$V3) + min(iads_zero.set$V3)))
 
 # Learn ...
 kk <- 1
@@ -127,8 +127,8 @@ colnames(iads_zero.err) <- c("k", "err", "accuracy")
 #           tmp <- colSums(iads_nomiss.set[4:1558])
 #           subset(x = tmp, subset = tmp >= iads_nomiss.n_inst/2)
 
-#iads_filled.set <- iads.set
-iads_filled.set <- iads.set[as.integer(row.names(iads_nomiss.train))*-1,] # Used to eliminate training data
+iads_filled.set <- iads.set
+#iads_filled.set <- iads.set[as.integer(row.names(iads_nomiss.train))*-1,] # Used to eliminate training data
 iads_filled.n_inst <- length(iads_filled.set$V1)
 
 tmp <- colMeans(x = iads.set[1:2], na.rm = TRUE)
@@ -139,9 +139,9 @@ iads_filled.set$V3[is.na(iads_filled.set$V3)] <- mean(x = iads.set$V3, na.rm = T
 iads_filled.set$V4[is.na(iads_filled.set$V4)] <- 1
 
 # Scaling the training set
-iads_filled.set$V1 <- ((iads_filled.set$V1 - min(iads_filled.set$V1)) / (max(iads_filled.set$V1) + min(iads_filled.set$V1)))
-iads_filled.set$V2 <- ((iads_filled.set$V2 - min(iads_filled.set$V2)) / (max(iads_filled.set$V2) + min(iads_filled.set$V2)))
-iads_filled.set$V3 <- ((iads_filled.set$V3 - min(iads_filled.set$V3)) / (max(iads_filled.set$V3) + min(iads_filled.set$V3)))
+#iads_filled.set$V1 <- ((iads_filled.set$V1 - min(iads_filled.set$V1)) / (max(iads_filled.set$V1) + min(iads_filled.set$V1)))
+#iads_filled.set$V2 <- ((iads_filled.set$V2 - min(iads_filled.set$V2)) / (max(iads_filled.set$V2) + min(iads_filled.set$V2)))
+#iads_filled.set$V3 <- ((iads_filled.set$V3 - min(iads_filled.set$V3)) / (max(iads_filled.set$V3) + min(iads_filled.set$V3)))
 
 # Learn ...
 kk <- 1
@@ -160,11 +160,11 @@ colnames(iads_filled.err) <- c("k", "err", "accuracy")
 
 
 # Plot accuracy
-#iads.plot <- ggplot(cbind(iads_nomiss.err, iads_filled.err$accuracy, iads_zero.err$accuracy), 
-#                    aes(x = iads_nomiss.err$k)) +
-  iads.plot <- ggplot(cbind(iads_nomiss.err, iads_filled.err$accuracy, iads_zero.err$accuracy), 
-                      aes(x = iads_nomiss.err$k)) +
-  #geom_line(aes(y=iads_nomiss.err$accuracy, color = "Without NA")) +
+iads.plot <- ggplot(cbind(iads_nomiss.err, iads_filled.err$accuracy, iads_zero.err$accuracy), 
+                    aes(x = iads_nomiss.err$k)) +
+  #iads.plot <- ggplot(cbind(iads_nomiss.err, iads_filled.err$accuracy, iads_zero.err$accuracy), 
+  #                    aes(x = iads_nomiss.err$k)) +
+  geom_line(aes(y=iads_nomiss.err$accuracy, color = "Without NA")) +
   geom_line(aes(y=iads_zero.err$accuracy, color = "0 instead of NA")) +
   geom_line(aes(y=iads_filled.err$accuracy, color = "Mean instead of NA")) +
   scale_colour_manual("", 
@@ -172,9 +172,9 @@ colnames(iads_filled.err) <- c("k", "err", "accuracy")
                       values = c("red", "green", "blue")) +
   ylab("Accuracy") +
   xlab("Distance k") +
-  #ggtitle("k-NN - first experiment") +
+  ggtitle("k-NN - first experiment") +
   #ggtitle("k-NN - second experiment") +
-  ggtitle("k-NN - third experiment") +
+  #ggtitle("k-NN - third experiment") +
   theme_bw() +
   theme(
     plot.title = element_text(family="Times", size = 10),
