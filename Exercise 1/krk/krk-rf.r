@@ -22,12 +22,11 @@ krk$differences.rook.rank = abs(krk$white.rook.rank - krk$black.king.rank)
 krk$differences.rook = krk$differences.rook.file + krk$differences.rook.rank
 
 # grow a random forest
-fit <- randomForest(x = krk[1:6],
-                    y = krk$moves.to.win,
-                    sampsize = ceiling(.632*nrow(krk)),
-                    oob.prox = TRUE,
-                    ntree = 10)
+krk_rf_move_10 <- rfcv(trainx = krk[1:6],
+                       trainy = krk$moves.to.win,
+                       cv.fold = 5,
+                       oob.prox = TRUE,
+                       ntree = 10)
 
 # print information about the tree
-print(fit)
-importance(fit)
+krk_rf_move_10$error.cv
