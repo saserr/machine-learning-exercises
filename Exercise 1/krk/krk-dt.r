@@ -1,7 +1,7 @@
 require('rpart')
 
 # read csv file
-krk <- read.csv('krk.csv', header = TRUE, sep = ',')
+krk <- read.csv('krk/krk.csv', header = TRUE, sep = ',')
 
 # cleanup data
 krk$moves.to.win <- as.numeric(ordered(krk$moves.to.win,
@@ -20,14 +20,15 @@ krk$differences.rook.file = abs(as.numeric(krk$white.rook.file) - as.numeric(krk
 krk$differences.rook.rank = abs(krk$white.rook.rank - krk$black.king.rank)
 krk$differences.rook = krk$differences.rook.file + krk$differences.rook.rank
 
-# grow a tree
-fit <- rpart(moves.to.win ~ white.king.file + white.king.rank + white.rook.file + white.rook.rank + black.king.file + black.king.rank,
+# grow and prune the tree
+fit <- rpart(moves.to.win ~ .,
              data = krk,
              method = 'class',
-             control = rpart.control(xval = 10, minsplit = 1, cp = 0.0001))
+             control = rpart.control(xval = 5, cp = 0))
+krk_dt_move_5 <- prune(fit, cp = fit$cptable[which.min(fit$cptable[,'xerror']), 'CP'])
 
 # print information about the tree
-printcp(fit)
+printcp(krk_dt_move_5)
 summary(fit, c = 0.01)
 plotcp(fit)
 
@@ -35,16 +36,3 @@ plotcp(fit)
 plot(fit, uniform = TRUE, main = 'Classification Tree for KRK Chess Endgame')
 text(fit, use.n = FALSE, all = TRUE, cex = .8)
 post(fit, use.n = FALSE, file = 'krk-tree.ps', title = 'Classification Tree for KRK Chess Endgame')
-
-# prune the tree
-pfit<- prune(fit, cp = fit$cptable[which.min(fit$cptable[,'xerror']), 'CP'])
-
-# print information about the pruned tree
-printcp(pfit)
-summary(pfit, c = 0.01)
-plotcp(pfit)
-
-# plot the pruned tree
-plot(fit, uniform = TRUE, main = 'Classification Tree for KRK Chess Endgame')
-text(fit, use.n = FALSE, all = TRUE, cex = .8)
-post(fit, use.n = FALSE, file = 'krk-pruned-tree.ps', title = 'Classification Tree for KRK Chess Endgame')
