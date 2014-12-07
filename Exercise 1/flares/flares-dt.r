@@ -5,11 +5,23 @@ flares <- read.csv('flares/flares.csv', header = TRUE, sep = ' ')
 
 # cleanup data
 
-# grow a tree
-fit <- rpart(c.class ~ .,
+# grow and prune the tree
+fit <- rpart(c.class ~ code.class + code.largest.spot.size + code.spot.distribution + activity + evolution + code.24h.activity + historically.complex + bacame.historically.complex.now + area + largest.spot.area,
              data = flares,
              method = 'anova',
-             control = rpart.control(xval = 10, minsplit = 100, cp = 0.0001))
+             control = rpart.control(xval = 5, cp = 0.03))
+flares_dt_c_1 <- prune(fit, cp = fit$cptable[which.min(fit$cptable[,'xerror']), 'CP'])
+
+# print information about the tree
+printcp(flares_dt_c_1)
+summary(fit, c = 0.01)
+plotcp(fit)
+rsq.rpart(fit)
+
+# plot the  tree
+plot(fit, uniform = TRUE, main = 'Classification Tree for Sun Flares')
+text(fit, use.n = FALSE, all = TRUE, cex = .8)
+post(fit, use.n = FALSE, file = 'flares-tree.ps', title = 'Classification Tree for Sun Flares')
 
 # prediction
 p <- predict(fit, newdata = flares[-(1:100),])
@@ -20,28 +32,3 @@ p <- predict(fit, newdata = flares[-(1:100),])
 # resubstitution error
 p <- table(p, flares$c.class)
 1 - (sum(diag(p)) / sum(p))
-
-# print information about the tree
-printcp(fit)
-summary(fit, c = 0.01)
-plotcp(fit)
-rsq.rpart(fit)
-
-# plot the tree
-plot(fit, uniform = TRUE, main = 'Classification Tree for Sun Flares')
-text(fit, use.n = FALSE, all = TRUE, cex = .8)
-post(fit, use.n = FALSE, file = 'flares-tree.ps', title = 'Classification Tree for Sun Flares')
-
-# prune the tree
-pfit<- prune(fit, cp = fit$cptable[which.min(fit$cptable[,'xerror']), 'CP'])
-
-# print information about the pruned tree
-printcp(pfit)
-summary(pfit, c = 0.01)
-plotcp(pfit)
-rsq.rpart(pfit)
-
-# plot the pruned tree
-plot(pfit, uniform = TRUE, main = 'Classification Tree for Sun Flares')
-text(pfit, use.n = FALSE, all = TRUE, cex = .8)
-post(pfit, use.n = FALSE, file = 'flares-pruned-tree.ps', title = 'Classification Tree for Sun Flares')
