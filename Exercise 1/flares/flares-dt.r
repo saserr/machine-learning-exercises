@@ -6,14 +6,14 @@ flares <- read.csv('flares/flares.csv', header = TRUE, sep = ' ')
 # cleanup data
 
 # grow and prune the tree
-fit <- rpart(c.class ~ code.class + code.largest.spot.size + code.spot.distribution + activity + evolution + code.24h.activity + historically.complex + bacame.historically.complex.now + area + largest.spot.area,
+fit <- rpart(x.class ~ code.class + code.largest.spot.size + code.spot.distribution + activity + evolution + code.24h.activity + historically.complex + bacame.historically.complex.now + area + largest.spot.area,
              data = flares,
              method = 'anova',
-             control = rpart.control(xval = 5, cp = 0.03))
-flares_dt_c_1 <- prune(fit, cp = fit$cptable[which.min(fit$cptable[,'xerror']), 'CP'])
+             control = rpart.control(xval = 5, cp = 0))
+flares_dt_x_5 <- prune(fit, cp = fit$cptable[which.min(fit$cptable[,'xerror']), 'CP'])
 
 # print information about the tree
-printcp(flares_dt_c_1)
+printcp(flares_dt_x_5)
 summary(fit, c = 0.01)
 plotcp(fit)
 rsq.rpart(fit)
