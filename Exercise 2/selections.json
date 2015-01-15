@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Test",
+    "evaluator": {
+      "class": "weka.attributeSelection.ClassifierSubsetEval",
+      "options": "-B weka.classifiers.bayes.NaiveBayes -T"
+    },
+    "search": {
+      "class": "weka.attributeSelection.BestFirst",
+      "options": "-D 1 -N 5"
+    }
+  }
+]
