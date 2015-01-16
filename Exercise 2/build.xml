@@ -1,6 +1,7 @@
 <project name="FeatureSelection" default="compile" basedir=".">
 
-    <property name="src.dir" location="src"/>
+    <property name="source.dir" location="src"/>
+    <property name="resource.dir" location="res"/>
     <property name="build.dir" location="build"/>
     <property name="main.class" value="at.tuwien.ml.Main"/>
 
@@ -13,27 +14,28 @@
     </target>
 
     <target name="compile" depends="init" description="compile the source">
-        <javac srcdir="${src.dir}"
+        <javac srcdir="${source.dir}"
                destdir="${build.dir}"
                classpathref="lib.path"
                includeantruntime="false"/>
+        <copy todir="${build.dir}">
+            <fileset dir="${resource.dir}"/>
+        </copy>
     </target>
 
-    <target name="arguments.set" depends="compile">
-        <condition property="arguments.set" else="false">
-            <and>
-                <isset property="data"/>
-                <isset property="selections"/>
-            </and>
+    <target name="arguments.valid" depends="compile">
+        <condition property="arguments.valid" else="false">
+            <isset property="data"/>
         </condition>
     </target>
 
-    <target name="arguments.not.set" unless="${arguments.set}" depends="arguments.set">
-        <echo message="Both -Ddata= and -Dselections= arguments are necessary"/>
+    <target name="arguments.not.valid" unless="${arguments.valid}" depends="arguments.valid">
+        <echo message="-Ddata= argument is necessary"/>
     </target>
 
-    <target name="run" if="${arguments.set}" depends="arguments.not.set" description="run main class">
+    <target name="run" if="${arguments.valid}" depends="arguments.not.valid" description="run main class">
         <java classname="${main.class}">
+            <jvmarg value="-Xmx=2G"/>
             <arg value="${data}"/>
             <arg value="${selections}"/>
             <classpath>

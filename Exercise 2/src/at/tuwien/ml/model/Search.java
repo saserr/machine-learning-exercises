@@ -1,8 +1,10 @@
 package at.tuwien.ml.model;
 
-import com.google.gson.*;
-import weka.attributeSelection.ASSearch;
-import weka.core.Utils;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import weka.attributeSelection.*;
 
 import java.lang.reflect.Type;
 
@@ -29,7 +31,7 @@ public class Search {
     }
 
     public final ASSearch create() throws Exception {
-        return (ASSearch) Utils.forName(ASSearch.class, this.klass, splitOptions(this.options));
+        return ASSearch.forName(this.klass, splitOptions(this.options));
     }
 
     public static class Json implements JsonDeserializer<Search> {

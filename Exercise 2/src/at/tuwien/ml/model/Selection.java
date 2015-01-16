@@ -1,6 +1,9 @@
 package at.tuwien.ml.model;
 
-import com.google.gson.*;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import weka.attributeSelection.AttributeSelection;
 
 import java.lang.reflect.Type;
@@ -51,8 +54,8 @@ public class Selection {
             final JsonObject object = element.getAsJsonObject();
             return new Selection(
                     object.getAsJsonPrimitive(NAME).getAsString(),
-                    context.deserialize(object.getAsJsonObject(EVALUATOR), Evaluator.class),
-                    context.deserialize(object.getAsJsonObject(SEARCH), Search.class)
+                    context.<Evaluator>deserialize(object.getAsJsonObject(EVALUATOR), Evaluator.class),
+                    context.<Search>deserialize(object.getAsJsonObject(SEARCH), Search.class)
             );
         }
     }

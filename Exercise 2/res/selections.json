@@ -1,0 +1,167 @@
+[
+  {
+    "name": "CfsSubsetEval + BestFirst",
+    "evaluator": {
+      "class": "weka.attributeSelection.CfsSubsetEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.BestFirst",
+      "options": "-D 1 -N 5"
+    }
+  },
+  {
+    "name": "ChiSquaredAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.ChiSquaredAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "ClassifierSubsetEval + BestFirst",
+    "evaluator": {
+      "class": "weka.attributeSelection.ClassifierSubsetEval",
+      "options": "-B weka.classifiers.bayes.NaiveBayes -T"
+    },
+    "search": {
+      "class": "weka.attributeSelection.BestFirst",
+      "options": "-D 1 -N 5"
+    }
+  },
+  {
+    "name": "ConsistencySubsetEval + BestFirst",
+    "evaluator": {
+      "class": "weka.attributeSelection.ConsistencySubsetEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.BestFirst",
+      "options": "-D 1 -N 5"
+    }
+  },
+  {
+    "name": "FilteredAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.FilteredAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "FilteredSubsetEval + BestFirst",
+    "evaluator": {
+      "class": "weka.attributeSelection.FilteredSubsetEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.BestFirst",
+      "options": "-D 1 -N 5"
+    }
+  },
+  {
+    "name": "GainRatioAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.GainRatioAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "InfoGainAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.InfoGainAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "LatentSemanticAnalysis + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.LatentSemanticAnalysis",
+      "options": "-N"
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "OneRAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.OneRAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "PrincipalComponents + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.PrincipalComponents",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "ReliefFAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.ReliefFAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "SVMAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.SVMAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "SymmetricalUncertAttributeEval + Ranker",
+    "evaluator": {
+      "class": "weka.attributeSelection.SymmetricalUncertAttributeEval",
+      "options": ""
+    },
+    "search": {
+      "class": "weka.attributeSelection.Ranker",
+      "options": ""
+    }
+  },
+  {
+    "name": "WrapperSubsetEval + BestFirst",
+    "evaluator": {
+      "class": "weka.attributeSelection.WrapperSubsetEval",
+      "options": "-B weka.classifiers.bayes.NaiveBayes"
+    },
+    "search": {
+      "class": "weka.attributeSelection.BestFirst",
+      "options": "-D 1 -N 5"
+    }
+  }
+]

@@ -1,8 +1,10 @@
 package at.tuwien.ml.model;
 
-import com.google.gson.*;
-import weka.attributeSelection.ASEvaluation;
-import weka.core.Utils;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import weka.attributeSelection.*;
 
 import java.lang.reflect.Type;
 
@@ -29,7 +31,7 @@ public class Evaluator {
     }
 
     public final ASEvaluation create() throws Exception {
-        return (ASEvaluation) Utils.forName(ASEvaluation.class, this.klass, splitOptions(this.options));
+        return ASEvaluation.forName(this.klass, splitOptions(this.options));
     }
 
     public static class Json implements JsonDeserializer<Evaluator> {
