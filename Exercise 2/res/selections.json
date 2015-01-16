@@ -1,6 +1,8 @@
 [
   {
     "name": "CfsSubsetEval + BestFirst",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.CfsSubsetEval",
       "options": ""
@@ -12,6 +14,8 @@
   },
   {
     "name": "ChiSquaredAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.ChiSquaredAttributeEval",
       "options": ""
@@ -23,6 +27,8 @@
   },
   {
     "name": "ClassifierSubsetEval + BestFirst",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.ClassifierSubsetEval",
       "options": "-B weka.classifiers.bayes.NaiveBayes -T"
@@ -34,6 +40,8 @@
   },
   {
     "name": "ConsistencySubsetEval + BestFirst",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.ConsistencySubsetEval",
       "options": ""
@@ -45,6 +53,8 @@
   },
   {
     "name": "FilteredAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.FilteredAttributeEval",
       "options": ""
@@ -56,6 +66,8 @@
   },
   {
     "name": "FilteredSubsetEval + BestFirst",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.FilteredSubsetEval",
       "options": ""
@@ -67,6 +79,8 @@
   },
   {
     "name": "GainRatioAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.GainRatioAttributeEval",
       "options": ""
@@ -78,6 +92,8 @@
   },
   {
     "name": "InfoGainAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.InfoGainAttributeEval",
       "options": ""
@@ -100,6 +116,8 @@
   },
   {
     "name": "OneRAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.OneRAttributeEval",
       "options": ""
@@ -122,6 +140,8 @@
   },
   {
     "name": "ReliefFAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.ReliefFAttributeEval",
       "options": ""
@@ -133,6 +153,8 @@
   },
   {
     "name": "SVMAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.SVMAttributeEval",
       "options": ""
@@ -144,6 +166,8 @@
   },
   {
     "name": "SymmetricalUncertAttributeEval + Ranker",
+    "folds": 5,
+    "seed": 5,
     "evaluator": {
       "class": "weka.attributeSelection.SymmetricalUncertAttributeEval",
       "options": ""

@@ -10,9 +10,11 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.util.concurrent.Future;
 
 public final class Main {
 
+    @SuppressWarnings("unchecked")
     public static void main(final String... args) {
         try {
             if (args.length < 1) {
@@ -34,21 +36,39 @@ public final class Main {
                     selections = Json.deserialize(reader, Selection[].class);
                 }
 
-                if (selections.length == 1) {
+                final int end = selections.length;
+                if (end == 1) {
                     System.out.println("Running 1 selection"); //NON-NLS
                 } else {
-                    System.out.println("Running " + selections.length + " selections"); //NON-NLS
+                    System.out.println("Running " + end + " selections in parallel"); //NON-NLS
                 }
 
-                for (final Selection selection : selections) {
-                    final AttributeSelection attributeSelection = selection.create();
-                    attributeSelection.SelectAttributes(data);
-                    final int[] indices = attributeSelection.selectedAttributes();
-                    System.out.println(selection.getName() + ": " + Utils.arrayToString(indices) + " (" + indices.length + " attributes)"); //NON-NLS
+                final Pair<String, Future<AttributeSelection>>[] results = new Pair[end];
+                for (int i = 0; i < end; i++) {
+                    final Selection selection = selections[i];
+                    results[i] = new Pair<>(selection.getName(), selection.run(data));
+                }
+
+                for (final Pair<String, Future<AttributeSelection>> result : results) {
+                    final int[] indices = result.second.get().selectedAttributes();
+                    System.out.println(result.first + ": " + Utils.arrayToString(indices) + " (" + indices.length + " attributes)"); //NON-NLS
                 }
             }
         } catch (final Exception ex) {
             ex.printStackTrace();
+        }
+    }
+
+    private static final class Pair<V, T> {
+
+        public final V first;
+        public final T second;
+
+        private Pair(final V first, final T second) {
+            super();
+
+            this.first = first;
+            this.second = second;
         }
     }
 
