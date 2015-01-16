@@ -1,5 +1,6 @@
 package at.tuwien.ml.model;
 
+import at.tuwien.ml.Result;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
@@ -71,13 +72,13 @@ public class Selection {
         return result;
     }
 
-    public final Future<AttributeSelection> run(final Instances data) {
-        return EXECUTOR.submit(new Callable<AttributeSelection>() {
+    public final Future<Result> run(final Classification classification, final Instances data) {
+        return EXECUTOR.submit(new Callable<Result>() {
             @Override
-            public AttributeSelection call() throws Exception {
+            public Result call() throws Exception {
                 final AttributeSelection selection = create();
                 selection.SelectAttributes(data);
-                return selection;
+                return new Result(classification, data, selection.selectedAttributes());
             }
         });
     }

@@ -1,0 +1,32 @@
+{
+  "classification": {
+    "class": "weka.classifiers.bayes.NaiveBayes",
+    "options": "",
+    "folds": 5,
+    "seed": 5
+  },
+  "selections": [
+    {
+      "name": "LatentSemanticAnalysis + Ranker",
+      "evaluator": {
+        "class": "weka.attributeSelection.LatentSemanticAnalysis",
+        "options": "-N"
+      },
+      "search": {
+        "class": "weka.attributeSelection.Ranker",
+        "options": ""
+      }
+    },
+    {
+      "name": "PrincipalComponents + Ranker",
+      "evaluator": {
+        "class": "weka.attributeSelection.PrincipalComponents",
+        "options": ""
+      },
+      "search": {
+        "class": "weka.attributeSelection.Ranker",
+        "options": ""
+      }
+    }
+  ]
+}

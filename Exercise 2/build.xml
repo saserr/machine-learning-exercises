@@ -37,7 +37,7 @@
         <java classname="${main.class}">
             <jvmarg value="-Xmx=2G"/>
             <arg value="${data}"/>
-            <arg value="${selections}"/>
+            <arg value="${analysis}"/>
             <classpath>
                 <pathelement location="${build.dir}"/>
                 <path refid="lib.path"/>
