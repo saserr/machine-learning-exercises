@@ -1,0 +1,119 @@
+Buildfile: /home/arougier/machineLearning/Exercise 2/build.xml
+
+init:
+
+compile:
+
+arguments.valid:
+
+arguments.not.valid:
+
+run:
+     [java] JVM args ignored when same JVM is used.
+     [java] Class attribute is missing in data! Using the last attribute
+     [java] Running 15 selections in parallel
+     [java] CfsSubsetEval + BestFirst:
+     [java] Attributes: 0,10,12,30,32,47,48,49,51,53,54,55,56,57,58,59,60 (17 attributes)
+     [java] Weighted F measure:    0.533
+     [java] Mean Absolute Error:    0.147
+     [java] Root Mean Squared Error:    0.36 
+     [java] 
+     [java] ChiSquaredAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] ClassifierSubsetEval + BestFirst:
+     [java] Attributes: 0,10,17,21,52,55,58,60 (8 attributes)
+     [java] Weighted F measure:    0.574
+     [java] Mean Absolute Error:    0.148
+     [java] Root Mean Squared Error:    0.324
+     [java] 
+     [java] ConsistencySubsetEval + BestFirst:
+     [java] Attributes: 0,3,4,5,6,7,10,12,16,18,20,23,24,25,26,30,32,34,41,49,50,51,52,55,56,59,60 (27 attributes)
+     [java] Weighted F measure:    0.547
+     [java] Mean Absolute Error:    0.148
+     [java] Root Mean Squared Error:    0.365
+     [java] 
+     [java] FilteredAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] FilteredSubsetEval + BestFirst:
+     [java] Attributes: 0,10,12,30,32,47,48,49,51,53,54,55,56,57,58,59,60 (17 attributes)
+     [java] Weighted F measure:    0.533
+     [java] Mean Absolute Error:    0.147
+     [java] Root Mean Squared Error:    0.36 
+     [java] 
+     [java] GainRatioAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] InfoGainAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] LatentSemanticAnalysis + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9 (10 attributes)
+     [java] Weighted F measure:    0.422
+     [java] Mean Absolute Error:    0.188
+     [java] Root Mean Squared Error:    0.371
+     [java] 
+     [java] OneRAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] PrincipalComponents + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33 (34 attributes)
+     [java] Weighted F measure:    0.547
+     [java] Mean Absolute Error:    0.148
+     [java] Root Mean Squared Error:    0.365
+     [java] 
+     [java] ReliefFAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] SVMAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] SymmetricalUncertAttributeEval + Ranker:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+     [java] WrapperSubsetEval + BestFirst:
+     [java] Attributes: 0,1,10,17,21,22,25,42,43,45,48,50,55,58,60 (15 attributes)
+     [java] Weighted F measure:    0.584
+     [java] Mean Absolute Error:    0.14 
+     [java] Root Mean Squared Error:    0.335
+     [java] 
+     [java] Best result (WrapperSubsetEval + BestFirst):
+     [java] Attributes: 0,1,10,17,21,22,25,42,43,45,48,50,55,58,60 (15 attributes)
+     [java] Weighted F measure:    0.584
+     [java] Mean Absolute Error:    0.14 
+     [java] Root Mean Squared Error:    0.335
+     [java] 
+     [java] Mayority result:
+     [java] Attributes: 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60 (61 attributes)
+     [java] Weighted F measure:    0.558
+     [java] Mean Absolute Error:    0.145
+     [java] Root Mean Squared Error:    0.373
+     [java] 
+
+BUILD SUCCESSFUL
+Total time: 237 minutes 35 seconds
